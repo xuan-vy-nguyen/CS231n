@@ -4,7 +4,7 @@ Find course here: http://cs231n.stanford.edu/
 
 ## Assignment 1:
 - Q1: KNN (done)
-- Q2: SVM
-- Q3: Softmax
+- Q2: SVM (done)
+- Q3: Softmax (done)
 - Q4: 2 layers NN
 - Q5: Image Features
