@@ -1,5 +1,5 @@
 # CS231n
-This repo contains my solution for *CS231n - Spring 2019*
+This repo contains my solution for *CS231n - Spring 2019* </br>
 Find course here: http://cs231n.stanford.edu/
 
 ## Assignment 1:
