@@ -11,5 +11,5 @@ Find course here: http://cs231n.stanford.edu/
 
 ## [Assigment 2]()
 - Q1: [Fully Connected Neural Network (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/FullyConnectedNets.ipynb)
-- Q2: [BatchNormalization]()
+- Q2: [BatchNormalization](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/BatchNormalization.ipynb)
 
