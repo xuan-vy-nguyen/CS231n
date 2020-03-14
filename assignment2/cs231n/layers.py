@@ -27,7 +27,10 @@ def affine_forward(x, w, b):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    num_train = x.shape[0]
+    
+    temp = x.reshape((num_train, -1))
+    out = temp.dot(w) + b
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
@@ -60,7 +63,13 @@ def affine_backward(dout, cache):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    num_train = x.shape[0]
+    temp = x.reshape((num_train, -1))
+    
+    db = dout.sum(axis=0)
+    dw = temp.T.dot(dout)
+    dtemp = dout.dot(w.T)
+    dx = dtemp.reshape(x.shape)
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
@@ -86,7 +95,8 @@ def relu_forward(x):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    out = x.copy()
+    out[out < 0] = 0
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
@@ -113,7 +123,13 @@ def relu_backward(dout, cache):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    # calculate dtempdx
+    dtempdx = x.copy()
+    dtempdx[dtempdx > 0] = 1.0
+    dtempdx[dtempdx < 0] = 0.0
+    
+    # calculate dx
+    dx = dout * dtempdx
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
@@ -142,7 +158,7 @@ def batchnorm_forward(x, gamma, beta, bn_param):
     behavior: they compute sample mean and variance for each feature using a
     large number of training images rather than using a running average. For
     this implementation we have chosen to use running averages instead since
-    they do not require an additional estimation step; the torch7
+    they do not require an additional estimation step; the torch
     implementation of batch normalization also uses running averages.
 
     Input:
@@ -193,8 +209,22 @@ def batchnorm_forward(x, gamma, beta, bn_param):
         #######################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
-
+        x_mean = np.mean(x, axis = 0)
+        x_var = np.var(x, axis = 0) + eps
+        x_std = np.sqrt(x_var)
+        
+        # normalize x
+        x_hat = (x-x_mean)/x_std
+        out = gamma * x_hat + beta
+        
+        # calculate running average
+        running_mean = (1 - momentum) * x_mean + momentum * running_mean
+        running_var = (1 - momentum) * x_var + momentum * running_var
+        
+        # save cache
+        cache = {'x': x, 'x_mean': x_mean, 'x_var': x_var, 'beta': beta, 
+                 'gamma': gamma, 'x_hat': x_hat, 'eps': eps, 'std': x_std}
+        
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         #######################################################################
         #                           END OF YOUR CODE                          #
@@ -208,7 +238,7 @@ def batchnorm_forward(x, gamma, beta, bn_param):
         #######################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
+        out = gamma * (x-running_mean) / np.sqrt(running_var+eps) + beta
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         #######################################################################
@@ -249,9 +279,18 @@ def batchnorm_backward(dout, cache):
     # might prove to be helpful.                                              #
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-    pass
-
+    
+    m = dout.shape[0]
+    x, mean, var, eps, z, gamma, std = cache['x'], cache['x_mean'], cache['x_var'], cache['eps'], cache['x_hat'], cache['gamma'], cache['std']
+    
+    dfdz = dout * gamma
+    dfdv = np.sum(dfdz*(x-mean)*(-0.5)*std**(-3), axis = 0)
+    dfdu = np.sum(dfdz*(-1/std) + dfdv*-2*(x-mean)/m, axis = 0)
+    
+    dx = dfdz/std + dfdv*2/m*(x-mean)+dfdu/m
+    dgamma = np.sum(dout*z, axis=0)
+    dbeta = np.sum(dout, axis=0)
+    
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
     #                             END OF YOUR CODE                            #
@@ -285,7 +324,14 @@ def batchnorm_backward_alt(dout, cache):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    m = dout.shape[0]
+    x, z, gamma, std = cache['x'], cache['x_hat'], cache['gamma'], cache['std']
+    
+    dfdz = dout * gamma
+    dx = dfdz - np.mean(dfdz, axis=0) - (1/m - 0)*np.sum(dfdz*z, axis=0)*z
+    dx /= std
+    dgamma = np.sum(dout*z, axis=0)
+    dbeta = np.sum(dout, axis=0)
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
