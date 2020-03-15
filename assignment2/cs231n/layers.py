@@ -376,8 +376,19 @@ def layernorm_forward(x, gamma, beta, ln_param):
     # the batch norm code and leave it almost unchanged?                      #
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+    
+    x_mean = np.mean(x, axis = 1).reshape(x.shape[0], -1)
+    x_var = np.var(x, axis = 1).reshape(x.shape[0], -1) + eps
+    x_std = np.sqrt(x_var).reshape(x.shape[0], -1)
 
-    pass
+    # normalize x
+    x_hat = (x-x_mean)/x_std
+    out = gamma * x_hat + beta
+
+    # save cache
+    cache = {'x': x, 'x_mean': x_mean, 'x_var': x_var, 'beta': beta, 
+             'gamma': gamma, 'x_hat': x_hat, 'eps': eps, 'std': x_std}
+    
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
@@ -412,7 +423,20 @@ def layernorm_backward(dout, cache):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+#     dout = dout.T
+    
+    # Use batchNorm
+    m = dout.shape[1]
+    x, z, gamma, std = cache['x'], cache['x_hat'], cache['gamma'], cache['std']
+    
+    dfdz = dout * gamma
+    dx = dfdz - np.mean(dfdz, axis=1).reshape(dfdz.shape[0], -1) - (1/m - 0)*np.sum(dfdz*z, axis=1).reshape(dfdz.shape[0], -1)*z
+    dx /= std
+    dgamma = np.sum(dout*z, axis=0)
+    dbeta = np.sum(dout, axis=0)
+    
+    # Convert to layernorm
+#     dx = dx.T
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################

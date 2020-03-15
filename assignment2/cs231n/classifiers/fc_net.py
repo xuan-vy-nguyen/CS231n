@@ -218,7 +218,7 @@ class FullyConnectedNet(object):
             self.params['W'+str(i+1)] = weight_scale * np.random.randn(layer_dims[i], layer_dims[i+1])
             self.params['b'+str(i+1)] = np.zeros(layer_dims[i+1])
             
-        if self.normalization == 'batchnorm':
+        if self.normalization != None:
             for i in range(self.num_layers-1):
                 self.params['gamma'+str(i+1)] = np.ones(layer_dims[i+1])
                 self.params['beta'+str(i+1)] = np.zeros(layer_dims[i+1])
@@ -288,13 +288,22 @@ class FullyConnectedNet(object):
         caches = []
         # first (num_layers-1)
         for i in range(self.num_layers-1):
-            if self.normalization=='batchnorm':
+            if self.normalization == 'batchnorm':
                 out, cache = affine_bn_relu_forward(out, 
                                                    self.params['W'+str(i+1)], 
                                                    self.params['b'+str(i+1)],
                                                    self.params['gamma'+str(i+1)],
                                                    self.params['beta'+str(i+1)],
                                                    self.bn_params[i])
+                
+            elif self.normalization == 'layernorm':
+                out, cache = affine_ln_relu_forward(out, 
+                                                   self.params['W'+str(i+1)], 
+                                                   self.params['b'+str(i+1)],
+                                                   self.params['gamma'+str(i+1)],
+                                                   self.params['beta'+str(i+1)],
+                                                   self.bn_params[i])
+                
             else:
                 out, cache = affine_relu_forward(out, 
                                        self.params['W'+str(i+1)], 
@@ -345,12 +354,20 @@ class FullyConnectedNet(object):
         
         # backward num_layers - 1
         for i in range(self.num_layers-2, -1, -1):
-            if self.normalization=='batchnorm':
+            if self.normalization == 'batchnorm':
                 dout, dw, db, dgamma, dbeta = affine_bn_relu_backward(dout, caches[i])
                 grads['W'+str(i+1)] = dw + self.reg * self.params['W'+str(i+1)]
                 grads['b'+str(i+1)] = db
                 grads['gamma'+str(i+1)] = dgamma
                 grads['beta'+str(i+1)] = dbeta
+                
+            elif self.normalization == 'layernorm':
+                dout, dw, db, dgamma, dbeta = affine_ln_relu_backward(dout, caches[i])
+                grads['W'+str(i+1)] = dw + self.reg * self.params['W'+str(i+1)]
+                grads['b'+str(i+1)] = db
+                grads['gamma'+str(i+1)] = dgamma
+                grads['beta'+str(i+1)] = dbeta
+                
             else:
                 dout, dw, db = affine_relu_backward(dout, caches[i])
                 grads['W'+str(i+1)] = dw + self.reg * self.params['W'+str(i+1)]
