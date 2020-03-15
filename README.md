@@ -9,7 +9,10 @@ Find course here: http://cs231n.stanford.edu/
 - Q4: [2 layers NN (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment1/two_layer_net.ipynb)
 - Q5: [Image Features (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment1/features.ipynb)
 
-## [Assigment 2]()
+## [Assigment 2](https://github.com/xuan-vy-nguyen/CS231n/tree/master/assignment2)
 - Q1: [Fully Connected Neural Network (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/FullyConnectedNets.ipynb)
-- Q2: [BatchNormalization](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/BatchNormalization.ipynb)
-
+- Q2: [BatchNormalization (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/BatchNormalization.ipynb)
+- Q3: [Dropout](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/Dropout.ipynb)
+- Q4: [ConvolutionalNetworks](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/ConvolutionalNetworks.ipynb)
+- Q5: [PyTorch](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/PyTorch.ipynb)
+- Q6: [TensorFlow](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/TensorFlow.ipynb)
