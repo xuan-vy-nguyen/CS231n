@@ -14,5 +14,5 @@ Find course here: http://cs231n.stanford.edu/
 - Q2: [BatchNormalization (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/BatchNormalization.ipynb)
 - Q3: [Dropout (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/Dropout.ipynb)
 - Q4: [ConvolutionalNetworks (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/ConvolutionalNetworks.ipynb)
-- Q5: [PyTorch](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/PyTorch.ipynb)
-- Q6: [TensorFlow](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/TensorFlow.ipynb)
+- Q5: [PyTorch (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/PyTorch.ipynb)
+- Q6: [TensorFlow (optional)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/TensorFlow.ipynb)
