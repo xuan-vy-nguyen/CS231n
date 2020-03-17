@@ -16,3 +16,6 @@ Find course here: http://cs231n.stanford.edu/
 - Q4: [ConvolutionalNetworks (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/ConvolutionalNetworks.ipynb)
 - Q5: [PyTorch (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/PyTorch.ipynb)
 - Q6: [TensorFlow (optional)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/TensorFlow.ipynb)
+
+##[Assigment 3](https://github.com/xuan-vy-nguyen/CS231n/tree/master/assignment3)
+- Q1: [RNN_Captioning (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment3/RNN_Captioning.ipynb)
