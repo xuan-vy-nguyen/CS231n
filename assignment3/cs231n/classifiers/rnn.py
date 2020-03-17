@@ -147,12 +147,18 @@ class CaptioningRNN(object):
         w_vectors, w_vector_cache = word_embedding_forward(captions_in, W_embed)  # [N, T, V]
         if self.cell_type=='rnn':
             h, h_cache = rnn_forward(w_vectors, h0, Wx, Wh, b)                    # [N, T, H]
+        elif self.cell_type=='lstm':
+            h, h_cache = lstm_forward(w_vectors, h0, Wx, Wh, b)
         scores, scores_cache = temporal_affine_forward(h, W_vocab, b_vocab)       
         # loss
         loss, dscores = temporal_softmax_loss(scores, captions_out, mask, False)
         # backward
         dh, dW_vocab, db_vocab = temporal_affine_backward(dscores, scores_cache)
-        dw_vectors, dh0, dWx, dWh, db = rnn_backward(dh, h_cache)
+        if self.cell_type=='rnn':
+            dw_vectors, dh0, dWx, dWh, db = rnn_backward(dh, h_cache)                    # [N, T, H]
+        elif self.cell_type=='lstm':
+            dw_vectors, dh0, dWx, dWh, db = lstm_backward(dh, h_cache)
+        
         dW_embed = word_embedding_backward(dw_vectors, w_vector_cache)
         dfeatures, dW_proj, db_proj = affine_backward(dh0, h0_cache)
         # grads
@@ -226,19 +232,23 @@ class CaptioningRNN(object):
         ###########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
+        V, W = W_embed.shape
         h0, h0_cache = affine_forward(features, W_proj, b_proj)
         H = h0.shape[-1]
         prev_h = h0
-        V, W = W_embed.shape
+        prev_c = np.zeros(h0.shape)
         x_i = np.ones((N,W)) * W_embed[self._start]
         for i in range(max_length):
             if self.cell_type=='rnn':  
                 h_i, cache_i = rnn_step_forward(x_i, prev_h, Wx, Wh, b) # [N,H]
-                scores = h_i.dot(W_vocab) + b_vocab           
-                max_indices = np.argmax(scores, axis=1)
-                captions[:, i] = max_indices
-                prev_h = h_i
-                x_i = W_embed[max_indices] # x.shape=[N,T,D] with T = max_length, we want x_i = x[:,i,:] = shape[N,D]
+            elif self.cell_type=='lstm':
+                h_i, prev_c, cache_i = lstm_step_forward(x_i, prev_h, prev_c, Wx, Wh, b) # [N,H]
+                
+            scores = h_i.dot(W_vocab) + b_vocab           
+            max_indices = np.argmax(scores, axis=1)
+            captions[:, i] = max_indices
+            prev_h = h_i
+            x_i = W_embed[max_indices] # x.shape=[N,T,D] with T = max_length, we want x_i = x[:,i,:] = shape[N,D]
                 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         ############################################################################

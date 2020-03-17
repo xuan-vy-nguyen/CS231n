@@ -19,3 +19,5 @@ Find course here: http://cs231n.stanford.edu/
 
 ## [Assigment 3](https://github.com/xuan-vy-nguyen/CS231n/tree/master/assignment3)
 - Q1: [RNN_Captioning (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment3/RNN_Captioning.ipynb)
+- Q2: [LSTM Captioning (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment3/LSTM_Captioning.ipynb)
+- Q3: 
