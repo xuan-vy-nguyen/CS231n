@@ -15,9 +15,11 @@ Find course here: http://cs231n.stanford.edu/
 - Q3: [Dropout (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/Dropout.ipynb)
 - Q4: [ConvolutionalNetworks (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/ConvolutionalNetworks.ipynb)
 - Q5: [PyTorch (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/PyTorch.ipynb)
-- Q6: [TensorFlow (optional)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment2/TensorFlow.ipynb)
+
 
 ## [Assignment 3](https://github.com/xuan-vy-nguyen/CS231n/tree/master/assignment3)
 - Q1: [RNN_Captioning (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment3/RNN_Captioning.ipynb)
 - Q2: [LSTM Captioning (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment3/LSTM_Captioning.ipynb)
-- Q3: [Generative Adversarial Networks PyTorch (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment3/Generative_Adversarial_Networks_PyTorch.ipynb)
+- Q3: [StyleTransfer-PyTorch (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment3/StyleTransfer-PyTorch.ipynb)
+- Q4: [NetworkVisualization-PyTorch (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment3/NetworkVisualization-PyTorch.ipynb)
+- Q5: [Generative Adversarial Networks PyTorch (done)](https://github.com/xuan-vy-nguyen/CS231n/blob/master/assignment3/Generative_Adversarial_Networks_PyTorch.ipynb)
